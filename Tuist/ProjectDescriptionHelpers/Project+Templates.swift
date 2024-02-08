@@ -1,74 +1,119 @@
 import ProjectDescription
 
-/// Project helpers are functions that simplify the way you define your project.
-/// Share code to create targets, settings, dependencies,
-/// Create your own conventions, e.g: a func that makes sure all shared targets are "static frameworks"
-/// See https://docs.tuist.io/guides/helpers/
-
 extension Project {
-    /// Helper function to create the Project for this ExampleApp
-    public static func app(name: String, destinations: Destinations, additionalTargets: [String]) -> Project {
-        var targets = makeAppTargets(name: name,
-                                     destinations: destinations,
-                                     dependencies: additionalTargets.map { TargetDependency.target(name: $0) })
-        targets += additionalTargets.flatMap({ makeFrameworkTargets(name: $0, destinations: destinations) })
-        return Project(name: name,
-                       organizationName: "tuist.io",
-                       targets: targets)
-    }
-
-    // MARK: - Private
-
-    /// Helper function to create a framework target and an associated unit test target
-    private static func makeFrameworkTargets(name: String, destinations: Destinations) -> [Target] {
-        let sources = Target(name: name,
-                destinations: destinations,
-                product: .framework,
-                bundleId: "io.tuist.\(name)",
-                infoPlist: .default,
-                sources: ["Targets/\(name)/Sources/**"],
-                resources: [],
-                dependencies: [])
-        let tests = Target(name: "\(name)Tests",
-                destinations: destinations,
-                product: .unitTests,
-                bundleId: "io.tuist.\(name)Tests",
-                infoPlist: .default,
-                sources: ["Targets/\(name)/Tests/**"],
-                resources: [],
-                dependencies: [.target(name: name)])
-        return [sources, tests]
-    }
-
-    /// Helper function to create the application target and the unit test target.
-    private static func makeAppTargets(name: String, destinations: Destinations, dependencies: [TargetDependency]) -> [Target] {
-        let infoPlist: [String: Plist.Value] = [
-            "CFBundleShortVersionString": "1.0",
-            "CFBundleVersion": "1",
-            "UILaunchStoryboardName": "LaunchScreen"
+    public static func makeModule(
+        name: String,
+        product: Product,
+        package: [Package] = [],
+        includeSource: Bool = true,
+        includeResource: Bool = false,
+        dependencies: [ProjectDescription.TargetDependency]
+    ) -> Project {
+        return Project(
+            name: name,
+            organizationName: DefaultSetting.organizaationName,
+            packages: package,
+            settings: .settings(
+                base: DefaultSetting.baseProductSetting,
+                configurations: [
+                    .debug(name: .debug),
+                    .release(name: .release)
+                ]
+            ),
+            targets: [
+                Target(
+                    name: name,
+                    platform: .iOS,
+                    product: product,
+                    bundleId: DefaultSetting.bundleId(moduleName: name),
+                    deploymentTarget: .iOS(
+                        targetVersion: DefaultSetting.targetVersion.stringValue,
+                        devices: .iphone
+                    ),
+                    sources: includeSource ? .default : nil,
+                    resources: includeResource ? .default : nil,
+                    dependencies: dependencies
+                )
+            ],
+            schemes: [
+                Scheme(
+                    name: name,
+                    buildAction: BuildAction(targets: [.project(path: ".", target: name)])
+                )
             ]
-
+        )
+    }
+    
+    public static func makeFeatureModule(
+        name: String,
+        package: [Package] = [],
+        dependencies: [TargetDependency],
+        includeDemo: Bool
+    ) -> Project {
+        var targets: [Target] = []
+        var schemes: [Scheme] = []
+        
         let mainTarget = Target(
             name: name,
-            destinations: destinations,
-            product: .app,
-            bundleId: "io.tuist.\(name)",
-            infoPlist: .extendingDefault(with: infoPlist),
+            platform: .iOS,
+            product: .framework,
+            bundleId: DefaultSetting.bundleId(moduleName: name),
+            infoPlist: "Targets/\(name)/Info.plist",
             sources: ["Targets/\(name)/Sources/**"],
             resources: ["Targets/\(name)/Resources/**"],
             dependencies: dependencies
         )
-
-        let testTarget = Target(
-            name: "\(name)Tests",
-            destinations: destinations,
-            product: .unitTests,
-            bundleId: "io.tuist.\(name)Tests",
-            infoPlist: .default,
-            sources: ["Targets/\(name)/Tests/**"],
-            dependencies: [
-                .target(name: "\(name)")
-        ])
-        return [mainTarget, testTarget]
+        targets.append(mainTarget)
+        
+        let mainScheme = Scheme(
+            name: name,
+            buildAction: BuildAction(targets: ["\(name)"])
+        )
+        schemes.append(mainScheme)
+        
+        if includeDemo {
+            let demoTarget = Target(
+                name: "\(name)Demo",
+                platform: .iOS,
+                product: .app,
+                bundleId: DefaultSetting.bundleId(moduleName: name.lowercased()) + "-demo",
+                infoPlist: "Targets/Demo/Info.plist",
+                sources: ["Targets/Demo/Sources/**"],
+                dependencies: [
+                    .project(target: "\(name)", path: "./"),
+//                    .mock,
+//                    .SPM.snapKit
+                ]
+            )
+            
+            targets.append(demoTarget)
+            
+            let demoScheme = Scheme(
+                name: name + "Demo",
+                buildAction: BuildAction(targets: ["\(name)Demo", "\(name)"]),
+                runAction: .runAction(
+                    configuration: .debug,
+                    attachDebugger: true
+                )
+            )
+            schemes.append(demoScheme)
+        }
+        
+        return Project(
+            name: name,
+            organizationName: DefaultSetting.organizaationName,
+            packages: package,
+            settings: .settings(
+                base: DefaultSetting.baseProductSetting,
+                configurations: [
+                    .debug(name: .debug),
+                    .release(name: .release)
+                ]
+            ),
+            targets: targets,
+            schemes: schemes
+        )
     }
 }
+
+
