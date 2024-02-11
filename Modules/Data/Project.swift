@@ -15,7 +15,6 @@ let project = Project.makeModule(
     product: .staticFramework,
     dependencies: [
         .Core.networking,
-        .SPM.moya,
-        .SPM.rxSwift
+        .domain
     ]
 )

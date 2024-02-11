@@ -12,6 +12,8 @@ let name = "MyPage"
 
 let project = Project.makeFeatureModule(
     name: name,
-    dependencies: [],
+    dependencies: [
+        .domain
+    ],
     includeDemo: true
 )

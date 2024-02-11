@@ -12,6 +12,8 @@ let name = "Event"
 
 let project = Project.makeFeatureModule(
     name: name,
-    dependencies: [],
+    dependencies: [
+        .domain
+    ],
     includeDemo: true
 )

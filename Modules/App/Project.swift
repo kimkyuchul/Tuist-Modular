@@ -13,23 +13,9 @@ let project = Project.makeModule(
     product: .app,
     includeResource: true,
     dependencies: [
-        .Core.designSystem,
-        .Core.networking,
-        .data,
-        .domain,
         .Feature.home,
         .Feature.event,
         .Feature.community,
-        .Feature.mypage,
-//        .SPM.firebase,
-        .SPM.fsCalendar,
-        .SPM.kingFisher,
-        .SPM.lottie,
-        .SPM.moya,
-        .SPM.reactorKit,
-        .SPM.rxDatasources,
-        .SPM.rxSwift,
-        .SPM.snapkit,
-        .SPM.then
+        .Feature.mypage
     ]
 )
