@@ -21,9 +21,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-
+        
+#if debug
         let vc = UIViewController()
         vc.view.backgroundColor = .systemPink
+#endif
         window?.rootViewController = HomeViewController()
         window?.makeKeyAndVisible()
     }
