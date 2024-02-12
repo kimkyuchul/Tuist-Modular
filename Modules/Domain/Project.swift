@@ -12,7 +12,8 @@ let name = "Domain"
 
 let project = Project.makeModule(
     name: name,
-    product: .staticFramework,
+    product: .staticFramework, 
+    targets: [],
     dependencies: [
     ]
 )

@@ -12,9 +12,7 @@ let name = "Networking"
 
 let project = Project.makeModule(
     name: name,
-    product: .staticLibrary,
-    dependencies: [
-        .SPM.moya,
-        .SPM.rxSwift
-    ]
+    product: .staticFramework, 
+    targets: [],
+    dependencies: []
 )

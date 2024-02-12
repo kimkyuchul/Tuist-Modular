@@ -12,10 +12,10 @@ let name = "Data"
 
 let project = Project.makeModule(
     name: name,
-    product: .staticFramework,
+    product: .staticFramework, 
+    targets: [],
     dependencies: [
-        .Core.networking,
-        .SPM.moya,
-        .SPM.rxSwift
+        .core,
+        .domain
     ]
 )

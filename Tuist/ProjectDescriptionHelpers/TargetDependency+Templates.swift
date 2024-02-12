@@ -8,6 +8,12 @@
 import ProjectDescription
 
 public extension TargetDependency {
+
+    static let core = TargetDependency.project(
+        target: "Core",
+        path: .relativeToRoot("./Modules/Core")
+    )
+    
     class Core {
         public static let networking = TargetDependency.project(
             target: "Networking",
@@ -17,6 +23,11 @@ public extension TargetDependency {
         public static let designSystem = TargetDependency.project(
             target: "DesignSystem",
             path: .relativeToRoot("./Modules/Core/DesignSystem")
+        )
+        
+        public static let ThirdPartyLib = TargetDependency.project(
+            target: "ThirdPartyLib",
+            path: .relativeToRoot("./Modules/Core/ThirdPartyLib")
         )
     }
     
@@ -31,24 +42,9 @@ public extension TargetDependency {
     )
     
     class Feature {
-        public static let home = TargetDependency.project(
-            target: "Home",
-            path: .relativeToRoot("./Modules/Feature/Home")
-        )
-        
-        public static let event = TargetDependency.project(
-            target: "Event",
-            path: .relativeToRoot("./Modules/Feature/Event")
-        )
-        
-        public static let community = TargetDependency.project(
-            target: "Community",
-            path: .relativeToRoot("./Modules/Feature/Community")
-        )
-        
-        public static let mypage = TargetDependency.project(
-            target: "MyPage",
-            path: .relativeToRoot("./Modules/Feature/MyPage")
+        public static let features = TargetDependency.project(
+            target: "Features",
+            path: .relativeToRoot("./Modules/Features")
         )
     }
     
@@ -58,7 +54,8 @@ public extension TargetDependency {
         public static let moya = TargetDependency.external(name: "Moya")
         public static let snapkit = TargetDependency.external(name: "SnapKit")
         public static let then = TargetDependency.external(name: "Then")
-        public static let firebase = TargetDependency.external(name: "Firebase")
+        public static let firebaseMessaging = TargetDependency.external(name: "FirebaseMessaging")
+        public static let firebaseAnalytics = TargetDependency.external(name: "FirebaseAnalytics")
         public static let rxDatasources = TargetDependency.external(name: "RxDataSources")
         public static let kingFisher = TargetDependency.external(name: "Kingfisher")
         public static let fsCalendar = TargetDependency.external(name: "FSCalendar")

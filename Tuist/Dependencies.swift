@@ -18,7 +18,14 @@ let dependencies = Dependencies(
         .rxDatasources,
         .kingFisher,
         .fsCalendar,
-        .lottie
-    ]),
+        .lottie,
+        .firebase
+    ],
+                                                         baseSettings: .settings(configurations: [
+                                                            .debug(name: .debug),
+                                                            .release(name: .release)
+                                                         ]
+                                                         )
+    ),
     platforms: [.iOS]
 )
