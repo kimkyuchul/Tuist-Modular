@@ -8,14 +8,12 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeModule(
-    name: "App",
-    product: .app,
-    includeResource: true,
+let project = Project.app(
+    name: DefaultSetting.appIdentifier,
     dependencies: [
-        .Feature.home,
-        .Feature.event,
-        .Feature.community,
-        .Feature.mypage
+        .Feature.features,
+        .core,
+        .SPM.firebaseMessaging,
+        .SPM.firebaseAnalytics
     ]
 )

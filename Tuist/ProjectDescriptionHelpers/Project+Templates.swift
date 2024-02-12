@@ -1,119 +1,91 @@
 import ProjectDescription
 
+public enum MicroFeatureTarget {
+    case unitTest
+    case demo
+}
+
 extension Project {
     public static func makeModule(
         name: String,
         product: Product,
+        targets: Set<MicroFeatureTarget>,
         package: [Package] = [],
+        infoPlist: InfoPlist = .default,
         includeSource: Bool = true,
         includeResource: Bool = false,
         dependencies: [ProjectDescription.TargetDependency]
     ) -> Project {
-        return Project(
-            name: name,
-            organizationName: DefaultSetting.organizaationName,
-            packages: package,
-            settings: .settings(
-                base: DefaultSetting.baseProductSetting,
-                configurations: [
-                    .debug(name: .debug),
-                    .release(name: .release)
-                ]
-            ),
-            targets: [
-                Target(
-                    name: name,
-                    platform: .iOS,
-                    product: product,
-                    bundleId: DefaultSetting.bundleId(moduleName: name),
-                    deploymentTarget: .iOS(
-                        targetVersion: DefaultSetting.targetVersion.stringValue,
-                        devices: .iphone
-                    ),
-                    sources: includeSource ? .default : nil,
-                    resources: includeResource ? .default : nil,
-                    dependencies: dependencies
-                )
+        let settings: Settings = .settings(
+            base: DefaultSetting.baseProductSetting,
+            configurations: [
+                .debug(name: .debug),
+                .release(name: .release)
             ],
-            schemes: [
-                Scheme(
-                    name: name,
-                    buildAction: BuildAction(targets: [.project(path: ".", target: name)])
-                )
-            ]
+            defaultSettings: .recommended
         )
-    }
-    
-    public static func makeFeatureModule(
-        name: String,
-        package: [Package] = [],
-        dependencies: [TargetDependency],
-        includeDemo: Bool
-    ) -> Project {
-        var targets: [Target] = []
-        var schemes: [Scheme] = []
         
-        let mainTarget = Target(
-            name: name,
-            platform: .iOS,
-            product: .framework,
-            bundleId: DefaultSetting.bundleId(moduleName: name),
-            infoPlist: "Targets/\(name)/Info.plist",
-            sources: ["Targets/\(name)/Sources/**"],
-            resources: ["Targets/\(name)/Resources/**"],
-            dependencies: dependencies
-        )
-        targets.append(mainTarget)
+        var allTargets: [Target] = [
+            Target(
+                name: name,
+                platform: .iOS,
+                product: product,
+                bundleId: DefaultSetting.bundleId(moduleName: name),
+                deploymentTarget: .iOS(
+                    targetVersion: DefaultSetting.targetVersion.stringValue,
+                    devices: .iphone
+                ),
+                infoPlist: infoPlist,
+                sources: includeSource ? .default : nil,
+                resources: includeResource ? .default : nil,
+                dependencies: dependencies
+            )
+        ]
         
-        let mainScheme = Scheme(
-            name: name,
-            buildAction: BuildAction(targets: ["\(name)"])
-        )
-        schemes.append(mainScheme)
+        if targets.contains(.unitTest) {
+            let testTarget = Target(
+                name: "\(name)Tests",
+                platform: .iOS,
+                product: .unitTests,
+                bundleId: "\(DefaultSetting.bundleId(moduleName: name.lowercased())).\(name)Tests",
+                infoPlist: .default,
+                sources: ["Tests/Sources/**"],
+                resources: includeResource ? [.glob(pattern: "Tests/Resources/**", excluding: [])] : nil,
+                dependencies: [
+                    .target(name: name)
+                ]
+            )
+            
+            allTargets.append(testTarget)
+        }
         
-        if includeDemo {
+        if targets.contains(.demo) {
             let demoTarget = Target(
                 name: "\(name)Demo",
                 platform: .iOS,
                 product: .app,
-                bundleId: DefaultSetting.bundleId(moduleName: name.lowercased()) + "-demo",
-                infoPlist: "Targets/Demo/Info.plist",
-                sources: ["Targets/Demo/Sources/**"],
+                bundleId: "\(DefaultSetting.bundleId(moduleName: name.lowercased())).\(name)Demo",
+                infoPlist: .default,
+                sources: ["Demo/Sources/**"],
                 dependencies: [
-                    .project(target: "\(name)", path: "./"),
-//                    .mock,
-//                    .SPM.snapKit
+                    .target(name: name)
                 ]
             )
             
-            targets.append(demoTarget)
-            
-            let demoScheme = Scheme(
-                name: name + "Demo",
-                buildAction: BuildAction(targets: ["\(name)Demo", "\(name)"]),
-                runAction: .runAction(
-                    configuration: .debug,
-                    attachDebugger: true
-                )
-            )
-            schemes.append(demoScheme)
+            allTargets.append(demoTarget)
         }
+        
+        let schemes: [Scheme] = targets.contains(.demo) ?
+        [.makeScheme(target: .debug, name: name), .makeDemoScheme(target: .debug, name: name)] :
+        [.makeScheme(target: .debug, name: name)]
         
         return Project(
             name: name,
             organizationName: DefaultSetting.organizaationName,
             packages: package,
-            settings: .settings(
-                base: DefaultSetting.baseProductSetting,
-                configurations: [
-                    .debug(name: .debug),
-                    .release(name: .release)
-                ]
-            ),
-            targets: targets,
+            settings: settings,
+            targets: allTargets,
             schemes: schemes
         )
     }
 }
-
-

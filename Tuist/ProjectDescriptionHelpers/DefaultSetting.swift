@@ -12,10 +12,13 @@ public struct DefaultSetting {
 //    public static let appVersion: SettingValue = "4.2.1"
 //    public static let buildNumber: SettingValue = "1"
     public static let organizaationName = "kyuchul"
-    public static let appIdentifier = "serviceLevelProject"
+    public static let appIdentifier = "ServiceLevelProject"
     
     public static let baseProductSetting: SettingsDictionary = [
-        "IPHONEOS_DEPLOYMENT_TARGET": targetVersion
+        "IPHONEOS_DEPLOYMENT_TARGET": targetVersion,
+        "OTHER_LDFLAGS" : [
+                "$(inherited) -ObjC"
+            ]
     ]
 }
 
