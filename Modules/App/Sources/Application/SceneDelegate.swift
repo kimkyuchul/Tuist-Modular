@@ -8,8 +8,10 @@
 
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+import Features
 
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    
     var window: UIWindow?
 
     func scene(
@@ -22,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let vc = UIViewController()
         vc.view.backgroundColor = .systemPink
-        window?.rootViewController = vc
+        window?.rootViewController = HomeViewController()
         window?.makeKeyAndVisible()
     }
 
