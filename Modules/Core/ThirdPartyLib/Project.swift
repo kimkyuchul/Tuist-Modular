@@ -23,6 +23,8 @@ let project = Project.makeModule(
         .SPM.lottie,
         .SPM.moya,
         .SPM.snapkit,
-        .SPM.then
+        .SPM.then,
+        .Carthage.realm,
+        .Carthage.realmSwift
     ]
 )

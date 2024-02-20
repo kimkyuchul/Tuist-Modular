@@ -61,4 +61,9 @@ public extension TargetDependency {
         public static let fsCalendar = TargetDependency.external(name: "FSCalendar")
         public static let lottie = TargetDependency.external(name: "Lottie")
     }
+    
+    class Carthage {
+        public static let realm = TargetDependency.external(name: "Realm")
+        public static let realmSwift = TargetDependency.external(name: "RealmSwift")
+    }
 }

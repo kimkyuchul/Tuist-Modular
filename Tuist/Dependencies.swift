@@ -9,6 +9,9 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let dependencies = Dependencies(
+    carthage: [
+        .github(path: "realm/realm-swift", requirement: .upToNext("10.46.0"))
+    ],
     swiftPackageManager: SwiftPackageManagerDependencies([
         .reactorKit,
         .rxSwift,

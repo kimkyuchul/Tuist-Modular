@@ -8,10 +8,16 @@
 
 import UIKit
 
+import RealmSwift
+
 public final class HomeViewController: UIViewController {
+    
+    var realm: Realm!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .orange
+        
+        realm = try! Realm()
     }
 }
