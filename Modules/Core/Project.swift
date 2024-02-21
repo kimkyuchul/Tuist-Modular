@@ -15,8 +15,7 @@ let project = Project.makeModule(
     product: .framework,
     targets: [],
     dependencies: [
-        .Core.designSystem,
-        .Core.networking,
-        .Core.ThirdPartyLib
+        .Core.thirdPartyLib,
+        .Core.util
     ]
 )

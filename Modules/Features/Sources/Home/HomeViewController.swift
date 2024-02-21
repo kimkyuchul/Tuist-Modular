@@ -7,17 +7,19 @@
 //
 
 import UIKit
+import CommonFeature
 
 import RealmSwift
+import RxSwift
 
-public final class HomeViewController: UIViewController {
+public final class HomeViewController: BaseViewController {
     
-    var realm: Realm!
+    private var realm: Realm!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
         
         realm = try! Realm()
+        disposeBag = DisposeBag()
     }
 }

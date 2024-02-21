@@ -16,7 +16,6 @@ let project = Project.makeModule(
     targets: [.demo],
     includeResource: true,
     dependencies: [
-        .domain,
-        .core
+        .commonFeature
     ]
 )

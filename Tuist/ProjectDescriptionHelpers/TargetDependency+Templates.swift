@@ -15,6 +15,16 @@ public extension TargetDependency {
     )
     
     class Core {
+        public static let thirdPartyLib = TargetDependency.project(
+            target: "ThirdPartyLib",
+            path: .relativeToRoot("./Modules/Core/ThirdPartyLib")
+        )
+        
+        public static let util = TargetDependency.project(
+            target: "Util",
+            path: .relativeToRoot("./Modules/Core/Util")
+        )
+        
         public static let networking = TargetDependency.project(
             target: "Networking",
             path: .relativeToRoot("./Modules/Core/Network")
@@ -23,11 +33,6 @@ public extension TargetDependency {
         public static let designSystem = TargetDependency.project(
             target: "DesignSystem",
             path: .relativeToRoot("./Modules/Core/DesignSystem")
-        )
-        
-        public static let ThirdPartyLib = TargetDependency.project(
-            target: "ThirdPartyLib",
-            path: .relativeToRoot("./Modules/Core/ThirdPartyLib")
         )
     }
     
@@ -39,6 +44,11 @@ public extension TargetDependency {
     static let domain = TargetDependency.project(
         target: "Domain",
         path: .relativeToRoot("./Modules/Domain")
+    )
+    
+    static let commonFeature = TargetDependency.project(
+        target: "CommonFeature",
+        path: .relativeToRoot("./Modules/CommonFeature")
     )
     
     class Feature {
