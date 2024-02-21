@@ -9,17 +9,14 @@ import ProjectDescription
 
 public struct DefaultSetting {
     public static let targetVersion: SettingValue = "15.0"
-//    public static let appVersion: SettingValue = "4.2.1"
-//    public static let buildNumber: SettingValue = "1"
     public static let organizaationName = "kyuchul"
     public static let appIdentifier = "ServiceLevelProject"
-    
-    public static let baseProductSetting: SettingsDictionary = [
-        "IPHONEOS_DEPLOYMENT_TARGET": targetVersion,
-        "OTHER_LDFLAGS" : [
-                "$(inherited) -ObjC"
-            ]
-    ]
+    public static let baseProductSetting: SettingsDictionary = SettingsDictionary()
+//        .marketingVersion("1.0.0") (앱스토어의 앱버전)
+//        .currentProjectVersion("0") (프로젝트의 현재 버전)
+        .debugInformationFormat(DebugInformationFormat.dwarfWithDsym)
+        .otherLinkerFlags(["$(inherited) -ObjC"])
+        .bitcodeEnabled(false)
 }
 
 public extension DefaultSetting {
