@@ -14,12 +14,18 @@ extension Project {
         package: [Package] = [],
         dependencies: [ProjectDescription.TargetDependency]
     ) -> Project {
+//        let settings: Settings = .settings(
+//            base: DefaultSetting.baseProductSetting,
+//            configurations: [
+//              .debug(name: .debug),
+//              .release(name: .release)
+//            ],
+//            defaultSettings: .recommended
+//          )
+        
         let settings: Settings = .settings(
             base: DefaultSetting.baseProductSetting,
-            configurations: [
-              .debug(name: .debug),
-              .release(name: .release)
-            ],
+            configurations: XCConfig.project,
             defaultSettings: .recommended
           )
         

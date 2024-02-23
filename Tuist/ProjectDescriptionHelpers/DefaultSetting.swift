@@ -15,6 +15,7 @@ public struct DefaultSetting {
         .debugInformationFormat(DebugInformationFormat.dwarfWithDsym)
         .otherLinkerFlags(["$(inherited) -ObjC"])
         .bitcodeEnabled(false)
+        .merging(["PRODUCT_NAME": SettingValue(stringLiteral: "ServiceLevelProject")])
 }
 
 public extension DefaultSetting {

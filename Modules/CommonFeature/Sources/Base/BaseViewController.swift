@@ -23,7 +23,10 @@ open class BaseViewController: UIViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBrown
+        view.backgroundColor = .green
+#if DEBUG
+        view.backgroundColor = .systemBlue
+#endif
     }
 }
 
