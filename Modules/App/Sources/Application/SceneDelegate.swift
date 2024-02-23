@@ -9,6 +9,9 @@
 import UIKit
 
 import Features
+import Data
+
+import FirebaseAnalytics
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -26,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc = UIViewController()
         vc.view.backgroundColor = .systemPink
 #endif
-        window?.rootViewController = HomeViewController()
+        window?.rootViewController = HomeDIContainer().makeViewController()
         window?.makeKeyAndVisible()
     }
 

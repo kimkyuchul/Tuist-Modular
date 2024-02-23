@@ -45,14 +45,14 @@ extension Scheme {
 
 extension Project {
     static let appScheme: [Scheme] = [
-        .init(name: "\(DefaultSetting.appIdentifier)-Debug",
+        Scheme(name: "\(DefaultSetting.appIdentifier)-Debug",
               buildAction: .buildAction(targets: ["\(DefaultSetting.appIdentifier)"]),
               runAction: .runAction(configuration: .debug),
               archiveAction: .archiveAction(configuration: .debug),
               profileAction: .profileAction(configuration: .debug),
               analyzeAction: .analyzeAction(configuration: .debug)
              ),
-        .init(name: "\(DefaultSetting.appIdentifier)-Release",
+        Scheme(name: "\(DefaultSetting.appIdentifier)-Release",
               buildAction: .buildAction(targets: ["\(DefaultSetting.appIdentifier)"]),
               runAction: .runAction(configuration: .release),
               archiveAction: .archiveAction(configuration: .release),

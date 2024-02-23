@@ -12,8 +12,6 @@ public struct DefaultSetting {
     public static let organizaationName = "kyuchul"
     public static let appIdentifier = "ServiceLevelProject"
     public static let baseProductSetting: SettingsDictionary = SettingsDictionary()
-//        .marketingVersion("1.0.0") (앱스토어의 앱버전)
-//        .currentProjectVersion("0") (프로젝트의 현재 버전)
         .debugInformationFormat(DebugInformationFormat.dwarfWithDsym)
         .otherLinkerFlags(["$(inherited) -ObjC"])
         .bitcodeEnabled(false)
@@ -22,6 +20,16 @@ public struct DefaultSetting {
 public extension DefaultSetting {
     static func bundleId(moduleName: String) -> String {
         return "com.\(organizaationName).\(appIdentifier).\(moduleName.lowercased())"
+    }
+    
+    static func baseProductSetting(moduleName: String) -> SettingsDictionary {
+        var settingsDictionary = SettingsDictionary()
+        settingsDictionary["DEFINES_MODULE"] = "NO"
+        return settingsDictionary
+            .debugInformationFormat(DebugInformationFormat.dwarfWithDsym)
+            .otherLinkerFlags(["$(inherited) -ObjC"])
+            .otherCFlags(["-fmodule-name=\(moduleName)"])
+            .bitcodeEnabled(false)
     }
 }
 

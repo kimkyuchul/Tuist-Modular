@@ -12,7 +12,7 @@ let project = Project.app(
     name: DefaultSetting.appIdentifier,
     dependencies: [
         .Feature.features,
-        .core,
+        .data,
         .SPM.firebaseMessaging,
         .SPM.firebaseAnalytics
     ]

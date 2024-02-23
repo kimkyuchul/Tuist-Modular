@@ -25,13 +25,10 @@ extension Project {
         
         let mainTarget = Target(
             name: name,
-            platform: .iOS,
+            destinations: .iOS,
             product: product,
             bundleId: DefaultSetting.bundleId(moduleName: name),
-            deploymentTarget: .iOS(
-                targetVersion: DefaultSetting.targetVersion.stringValue,
-                devices: .iphone
-            ),
+            deploymentTargets: .iOS(DefaultSetting.targetVersion.stringValue),
             infoPlist: .file(path: "Support/Info.plist"),
             sources: .default,
             resources: .default,
@@ -40,7 +37,7 @@ extension Project {
         
         let testTarget = Target(
             name: "\(name)Tests",
-            platform: .iOS,
+            destinations: .iOS,
             product: .unitTests,
             bundleId: "\(DefaultSetting.bundleId(moduleName: name.lowercased())).\(name)Tests",
             infoPlist: .default,

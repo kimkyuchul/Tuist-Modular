@@ -28,13 +28,10 @@ extension Project {
         var allTargets: [Target] = [
             Target(
                 name: name,
-                platform: .iOS,
+                destinations: .iOS,
                 product: product,
                 bundleId: DefaultSetting.bundleId(moduleName: name),
-                deploymentTarget: .iOS(
-                    targetVersion: DefaultSetting.targetVersion.stringValue,
-                    devices: .iphone
-                ),
+                deploymentTargets: .iOS(DefaultSetting.targetVersion.stringValue),
                 infoPlist: infoPlist,
                 sources: includeSource ? .default : nil,
                 resources: includeResource ? .default : nil,
@@ -45,7 +42,7 @@ extension Project {
         if targets.contains(.unitTest) {
             let testTarget = Target(
                 name: "\(name)Tests",
-                platform: .iOS,
+                destinations: .iOS,
                 product: .unitTests,
                 bundleId: "\(DefaultSetting.bundleId(moduleName: name.lowercased())).\(name)Tests",
                 infoPlist: .default,
@@ -62,7 +59,7 @@ extension Project {
         if targets.contains(.demo) {
             let demoTarget = Target(
                 name: "\(name)Demo",
-                platform: .iOS,
+                destinations: .iOS,
                 product: .app,
                 bundleId: "\(DefaultSetting.bundleId(moduleName: name.lowercased())).\(name)Demo",
                 infoPlist: .default,

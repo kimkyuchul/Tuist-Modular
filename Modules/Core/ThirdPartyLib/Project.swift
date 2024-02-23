@@ -21,7 +21,6 @@ let project = Project.makeModule(
         .SPM.fsCalendar,
         .SPM.kingFisher,
         .SPM.lottie,
-        .SPM.moya,
         .SPM.snapkit,
         .SPM.then,
         .Carthage.realm,

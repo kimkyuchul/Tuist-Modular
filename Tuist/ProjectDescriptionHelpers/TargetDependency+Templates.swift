@@ -40,11 +40,28 @@ public extension TargetDependency {
         target: "Data",
         path: .relativeToRoot("./Modules/Data")
     )
-    
+        
     static let domain = TargetDependency.project(
         target: "Domain",
         path: .relativeToRoot("./Modules/Domain")
     )
+    
+    class Domain {
+        public static let useCase = TargetDependency.project(
+            target: "UseCase",
+            path: .relativeToRoot("./Modules/Domain/UseCase")
+        )
+        
+        public static let entity = TargetDependency.project(
+            target: "Entity",
+            path: .relativeToRoot("./Modules/Domain/Entity")
+        )
+        
+        public static let repositoryInterface = TargetDependency.project(
+            target: "RepositoryInterface",
+            path: .relativeToRoot("./Modules/Domain/RepositoryInterface")
+        )
+    }
     
     static let commonFeature = TargetDependency.project(
         target: "CommonFeature",

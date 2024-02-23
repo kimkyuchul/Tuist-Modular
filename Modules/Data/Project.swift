@@ -15,7 +15,8 @@ let project = Project.makeModule(
     product: .staticFramework, 
     targets: [],
     dependencies: [
-        .core,
-        .domain
+        .SPM.moya,
+        .Domain.repositoryInterface,
+        .Domain.entity
     ]
 )

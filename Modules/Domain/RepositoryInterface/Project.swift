@@ -1,19 +1,20 @@
 //
 //  Project.swift
-//  ServiceLevelProjectManifests
+//  ProjectDescriptionHelpers
 //
-//  Created by Kooky macBook Air on 2/8/24.
+//  Created by Kooky macBook Air on 2/22/24.
 //
 
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let name = "Domain"
+let name = "RepositoryInterface"
 
 let project = Project.makeModule(
     name: name,
-    product: .staticFramework, 
+    product: .staticFramework,
     targets: [],
     dependencies: [
+        .core
     ]
 )

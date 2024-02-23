@@ -2,22 +2,20 @@
 //  Project.swift
 //  ProjectDescriptionHelpers
 //
-//  Created by Kooky macBook Air on 2/21/24.
+//  Created by Kooky macBook Air on 2/22/24.
 //
 
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let name = "CommonFeature"
+let name = "UseCase"
 
 let project = Project.makeModule(
     name: name,
     product: .staticFramework,
     targets: [],
-    includeResource: true,
     dependencies: [
-        .Domain.useCase,
-        .data,
-        .core
+        .Domain.entity,
+        .Domain.repositoryInterface
     ]
 )
