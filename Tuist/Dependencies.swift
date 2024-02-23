@@ -24,6 +24,9 @@ let dependencies = Dependencies(
         .lottie,
         .firebase
     ],
+                                                         productTypes: [
+                                                            "Lottie" : .framework
+                                                         ],
                                                          baseSettings: .settings(configurations: [
                                                             .debug(name: .debug),
                                                             .release(name: .release)
