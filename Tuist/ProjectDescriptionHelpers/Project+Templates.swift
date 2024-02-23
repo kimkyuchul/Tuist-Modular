@@ -14,6 +14,7 @@ extension Project {
         infoPlist: InfoPlist = .default,
         includeSource: Bool = true,
         includeResource: Bool = false,
+        resourceSynthesizers: [ResourceSynthesizer] = [],
         dependencies: [ProjectDescription.TargetDependency]
     ) -> Project {
         let settings: Settings = .settings(
@@ -34,7 +35,7 @@ extension Project {
                 deploymentTargets: .iOS(DefaultSetting.targetVersion.stringValue),
                 infoPlist: infoPlist,
                 sources: includeSource ? .default : nil,
-                resources: includeResource ? .default : nil,
+                resources: includeResource ? [.glob(pattern: "Resources/**", excluding: [])] : [],
                 dependencies: dependencies
             )
         ]
@@ -82,7 +83,8 @@ extension Project {
             packages: package,
             settings: settings,
             targets: allTargets,
-            schemes: schemes
+            schemes: schemes,
+            resourceSynthesizers: resourceSynthesizers
         )
     }
 }

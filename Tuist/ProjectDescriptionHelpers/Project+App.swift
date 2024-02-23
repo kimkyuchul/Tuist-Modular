@@ -31,7 +31,7 @@ extension Project {
             deploymentTargets: .iOS(DefaultSetting.targetVersion.stringValue),
             infoPlist: .file(path: "Support/Info.plist"),
             sources: .default,
-            resources: .default,
+            resources: [.glob(pattern: "Resources/**", excluding: [])],
             dependencies: dependencies
         )
         

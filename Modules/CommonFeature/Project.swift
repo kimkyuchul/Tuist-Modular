@@ -15,6 +15,11 @@ let project = Project.makeModule(
     product: .staticFramework,
     targets: [],
     includeResource: true,
+    resourceSynthesizers: [
+        .custom(name: "Lottie", parser: .json, extensions: ["lottie"]),
+        .fonts(),
+        .assets()
+    ],
     dependencies: [
         .Domain.useCase,
         .data,
