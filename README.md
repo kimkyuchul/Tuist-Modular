@@ -104,6 +104,6 @@ public final class HomeDIContainer: BaseDIContainer {
 ### Tuist 3.x → 4.x 마이그레이션
 
 - Tuist가 [4 버전대로 업데이트](https://github.com/tuist/tuist/releases/tag/4.0.0) 되면서 변경사항이 생겼다. 다음과 같은 변경사항 대응이 필요
-1. **크게 변경된 사항은 Tuist의 Signing 기능이 제거** 
+1. Tuist의 Signing 기능이 제거
 1. Dependencies.swift → Carthage 지원 제거
 1. ProjectDescription init 생성자 제거 → 정적 생성자로 변경
