@@ -49,3 +49,16 @@ public extension SettingValue {
         }
     }
 }
+
+public extension SettingsDictionary {
+    func setCodeSignManual() -> SettingsDictionary {
+        merging(["CODE_SIGN_STYLE": SettingValue(stringLiteral: "Manual")])
+            .merging(["DEVELOPMENT_TEAM": SettingValue(stringLiteral: "9K86FQHDLU")])
+            .merging(["CODE_SIGN_IDENTITY": SettingValue(stringLiteral: "$(CODE_SIGN_IDENTITY)")])
+    }
+    
+    func setProvisioning() -> SettingsDictionary {
+        merging(["PROVISIONING_PROFILE_SPECIFIER": SettingValue(stringLiteral: "$(APP_PROVISIONING_PROFILE)")])
+            .merging(["PROVISIONING_PROFILE": SettingValue(stringLiteral: "$(APP_PROVISIONING_PROFILE)")])
+    }
+}

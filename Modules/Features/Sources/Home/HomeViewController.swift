@@ -10,15 +10,8 @@ import UIKit
 
 import CommonFeature
 
-
 import RealmSwift
 import RxSwift
-import Data
-import UseCase
-
-public protocol HomeViewControllerProtocol {
-    func makeHomeViewModel() -> HomeViewModel
-}
 
 public final class HomeViewController: BaseViewController {
     

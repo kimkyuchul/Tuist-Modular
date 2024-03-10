@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Coin: Codable  {
+public struct Coin  {
     public let data: ResponseCoin
         
     public init(data: ResponseCoin) {
